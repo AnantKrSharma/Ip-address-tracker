@@ -35,7 +35,7 @@ body {
   color: var(--tertiary-color);
   margin-bottom: 10px;
 }
-.header__field {
+.header__form {
   width: 100%;
   max-width: 550px;
   margin: 15px 0;
