@@ -2,6 +2,25 @@ const API_KEY = 'at_cu4hfDxm1O4NN25Gez1wGkXacpny2';
 const IP_API_URL = `https://geo.ipify.org/api/v1?apiKey=${API_KEY}`;
 
 const button = document.querySelector('.header__button');
+const ip_address = document.querySelector('.header__ip-address');
+const region = document.querySelector('.header__ip-location');
+const timezone = document.querySelector('.header__ip-timezone');
+const isp = document.querySelector('.header__ip-isp');
+
+(function() {
+  const res = fetch(`${IP_API_URL}`, { method: 'GET' })
+    .then(res => res.json())
+    .catch(() => console.error('Request failed'));
+
+  res
+    .then(res => {
+      ip_address.innerHTML = res.ip;
+      region.innerHTML = res.location.city;
+      timezone.innerHTML = `UTC ${res.location.timezone}`;
+      isp.innerHTML = res.isp;
+    })
+    .catch(() => console.error('Request failed'));
+})();
 
 function getGeoLocation() {
   const form = document.querySelector('.header__form');
