@@ -1,5 +1,6 @@
 const API_KEY = 'at_cu4hfDxm1O4NN25Gez1wGkXacpny2';
 const IP_API_URL = `https://geo.ipify.org/api/v1?apiKey=${API_KEY}`;
+const MAP_BOX_ACCESS_TOKEN = 'pk.eyJ1Ijoid2FzaGluZ3RvbjI5OSIsImEiOiJja2dzaTNkMjEwNDM0MzFvZnNnNTNxNjNvIn0.c0RymMFd_Q9NADrTGZh7wg';
 
 const button = document.querySelector('.header__button');
 const ip_address = document.querySelector('.header__ip-address');
@@ -14,10 +15,25 @@ const isp = document.querySelector('.header__ip-isp');
 
   res
     .then(res => {
+      const lat = res.location.lat;
+      const lng = res.location.lng;
+
       ip_address.innerHTML = res.ip;
       region.innerHTML = res.location.city;
       timezone.innerHTML = `UTC ${res.location.timezone}`;
       isp.innerHTML = res.isp;
+
+      var mymap = L.map('mapid').setView([lat, lng], 13);
+      var marker = L.marker([lat, lng]).addTo(mymap);
+
+      L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: MAP_BOX_ACCESS_TOKEN,
+      }).addTo(mymap);
+      marker.bindPopup(`<b>${region.textContent}</b>`).openPopup();
     })
     .catch(() => console.error('Request failed'));
 })();
