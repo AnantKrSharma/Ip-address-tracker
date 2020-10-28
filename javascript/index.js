@@ -1,5 +1,6 @@
 const API_KEY = 'at_cu4hfDxm1O4NN25Gez1wGkXacpny2';
 const IP_API_URL = `https://geo.ipify.org/api/v1?apiKey=${API_KEY}`;
+const MAP_BOX_API_URL = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
 const MAP_BOX_ACCESS_TOKEN = 'pk.eyJ1Ijoid2FzaGluZ3RvbjI5OSIsImEiOiJja2dzaTNkMjEwNDM0MzFvZnNnNTNxNjNvIn0.c0RymMFd_Q9NADrTGZh7wg';
 
 const button = document.querySelector('.header__button');
@@ -13,7 +14,7 @@ const marker = L.marker([0, 0]).addTo(mymap);
 
 function displayMap(lat, lng) {
   marker.setLatLng([lat, lng]);
-  L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+  L.tileLayer(MAP_BOX_API_URL, {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox/streets-v11',
     tileSize: 512,
