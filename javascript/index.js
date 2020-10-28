@@ -8,10 +8,25 @@ const region = document.querySelector('.header__ip-location');
 const timezone = document.querySelector('.header__ip-timezone');
 const isp = document.querySelector('.header__ip-isp');
 
+const mymap = L.map('mapid').setView([0, 0], 13);
+const marker = L.marker([0, 0]).addTo(mymap);
+
+function displayMap(lat, lng) {
+  marker.setLatLng([lat, lng]);
+  L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: MAP_BOX_ACCESS_TOKEN,
+  }).addTo(mymap);
+  marker.bindPopup(`<b>${region.textContent}</b>`).openPopup();
+}
+
 (function() {
   const res = fetch(`${IP_API_URL}`, { method: 'GET' })
-    .then(res => res.json())
-    .catch(() => console.error('Request failed'));
+                .then(res => res.json())
+                .catch(() => console.error('Request failed'));
 
   res
     .then(res => {
@@ -23,19 +38,9 @@ const isp = document.querySelector('.header__ip-isp');
       timezone.innerHTML = `UTC ${res.location.timezone}`;
       isp.innerHTML = res.isp;
 
-      var mymap = L.map('mapid').setView([lat, lng], 13);
-      var marker = L.marker([lat, lng]).addTo(mymap);
-
-      L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`, {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: MAP_BOX_ACCESS_TOKEN,
-      }).addTo(mymap);
-      marker.bindPopup(`<b>${region.textContent}</b>`).openPopup();
+      displayMap(lat, lng);
     })
-    .catch(() => console.error('Request failed'));
+    .catch(() => console.error('Ip request failed'));
 })();
 
 function getGeoLocation() {
@@ -52,7 +57,23 @@ function getGeoLocation() {
       input.value = '';
       return;
     }
-    console.log('good');
+
+    const res = fetch(`${IP_API_URL}&ipAddress=${input.value}`)
+                  .then(res => res.json())
+                  .catch(() => console.error("Ip request failed"));
+    res
+      .then(res => {
+        const lat = res.location.lat;
+        const lng = res.location.lng;
+
+        ip_address.innerHTML = res.ip;
+        region.innerHTML = res.location.city;
+        timezone.innerHTML = `UTC ${res.location.timezone}`;
+        isp.innerHTML = res.isp;
+
+        displayMap(lat, lng);
+      })
+      .catch(() => console.error('Ip request failed'));
   });
 }
 
