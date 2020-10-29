@@ -1,6 +1,9 @@
-# Frontend Mentor - IP Address Tracker
+<h1 align="center">Frontend Mentor - IP Address Tracker</h1>
 
-![Design preview for the IP Address Tracker coding challenge](./design/desktop-preview.jpg)
+<p align="center">
+<img src="./images/laptop.png" alt="Laptop design" width="350" />
+<img src="./images/iphone.png" alt="Mobile design" width="350" />
+</p>
 
 ## Welcome! 👋
 
