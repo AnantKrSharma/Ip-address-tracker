@@ -60,6 +60,8 @@ You will find all the required assets in the `/images` folder. The assets are al
 
 There is also a `style-guide.md` file, which contains the information you'll need, such as color palette and fonts.
 
+Access [This URL](https://www.cloudflare.com/ips/) to get some ips you can use to test.
+
 ## Running project 🛠️
 
 to run this project on your environment follow these steps:
