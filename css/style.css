@@ -101,6 +101,11 @@ body {
   height: calc(100vh - 280px);
 }
 
+.leaflet-top,
+.leaflet-left {
+  display: none;
+}
+
 
 @media screen and (min-width: 640px) {
   .header {
@@ -116,9 +121,19 @@ body {
     padding: 10px;
     border-right: 1px solid var(--secondary-color);
   }
+  .header__ip-info:last-child {
+    border-right: none;
+  }
 
   #mapid {
     height: calc(100vh - 220px);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .leaflet-top,
+  .leaflet-left {
+    display: block;
   }
 }
 
