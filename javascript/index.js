@@ -9,11 +9,13 @@ const region = document.querySelector('.header__ip-location');
 const timezone = document.querySelector('.header__ip-timezone');
 const isp = document.querySelector('.header__ip-isp');
 
-const mymap = L.map('mapid').setView([0, 0], 13);
+const mymap = L.map('mapid');
 const marker = L.marker([0, 0]).addTo(mymap);
 
 function displayMap(lat, lng) {
+  mymap.setView([lat, lng], 13);
   marker.setLatLng([lat, lng]);
+
   L.tileLayer(MAP_BOX_API_URL, {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox/streets-v11',
