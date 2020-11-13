@@ -69,14 +69,14 @@ to run this project on your environment follow these steps:
 1. Clone this repository to your local machine running this command 👇
 
 ```
-git clone https://github.com/washington299/Ip-address-tracker.git
+git clone https://github.com/washington299/Ip-address-tracker
 ```
 
 2. Then go to project's folder running this command 👇
 
 Windows:
 ```
-cd .\Ip-address-tracker.git\
+cd .\Ip-address-tracker\
 ```
 Linux:
 ```
